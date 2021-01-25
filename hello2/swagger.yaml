@@ -35,7 +35,146 @@ info:
   description: A tool used to process orders.
   version: '1.0'
 paths:
-  "/orders":
+  /orders/{token}:
+    put:
+      summary: Get an order by order ID
+      parameters:
+      - in: path
+        name: token
+        type: string
+        required: true
+      - name: status
+        required: true
+        type: string
+        in: query
+        enum:
+        - inprogress
+        - processed
+        - disputed
+        - shipped
+        - delivered
+        - pending
+        - cancelled
+      - name: paymentStatus
+        type: string
+        in: query
+      - name: trackingNumber
+        type: string
+        in: query
+      - name: trackingUrl
+        type: string
+        in: query
+      - name: metadata
+        type: string
+        in: query
+      responses:
+        '200':
+          description: Everything went well.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '201':
+          description: Created. A new resource has been created.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '204':
+          description: A new resource has been deleted.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '400':
+          description: The provided information is invalid, the request failed.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '404':
+          description: "  The resource has not been found."
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '500':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '502':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '503':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '504':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+      security:
+      - API_Key: []
+      produces:
+      - application/json
+    get:
+      summary: Get an order by order ID
+      parameters:
+      - in: path
+        name: token
+        type: string
+        required: true
+      responses:
+        '200':
+          description: Everything went well.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '201':
+          description: Created. A new resource has been created.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '204':
+          description: A new resource has been deleted.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '400':
+          description: The provided information is invalid, the request failed.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '404':
+          description: "  The resource has not been found."
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '500':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '502':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '503':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+        '504':
+          description: Something went wrong on our side.
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+      security:
+      - API_Key: []
+      produces:
+      - application/json
+  /orders:
     get:
       summary: Grab incoming orders
       parameters:
@@ -147,5 +286,3 @@ paths:
       - API_Key: []
       produces:
       - application/json
-
-  
