@@ -1,0 +1,157 @@
+---
+openapi: 3.0.3
+info:
+  title: Snipcart API
+  description: A tool used to process orders.
+  version: "1.0"
+servers:
+- url: https://virtserver.swaggerhub.com/SStest3/Snipcart/1.0
+  description: SwaggerHub API Auto Mocking
+- url: https://app.snipcart.com/api/
+paths:
+  /orders:
+    get:
+      summary: Grab incoming orders
+      parameters:
+      - name: offset
+        in: query
+        description: Number of results to skip. Default is 0.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Number of results to fetch. Default is 20.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 20
+      - name: status
+        in: query
+        description: 'A status criteria for your order collection. Possible values: (`InProgress`, `Processed`, `Disputed`, `Shipped`, `Delivered`, `Pending`, `Cancelled`)'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - inprogress
+          - processed
+          - disputed
+          - shipped
+          - delivered
+          - pending
+          - cancelled
+      - name: invoiceNumber
+        in: query
+        description: The invoice number of the order to retrieve.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: productId
+        in: query
+        description: Returns only orders containing that product. **Note that this has to be the user defined ID, not the unique ID defined by Snipcart
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: placedBy
+        in: query
+        description: The name of the person who made the purchase.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: Returns only the orders placed after this date.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: to
+        in: query
+        description: Returns only the orders placed before this date.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: isRecurringOrder
+        in: query
+        description: returns only the orders that are recurring or not.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "401":
+          description: Authentication information is missing or invalid
+          headers:
+            WWW_Authenticate:
+              style: simple
+              explode: false
+              schema:
+                type: string
+        "200":
+          description: Everything went well.
+          content:
+            application/json:
+              schema:
+                type: string
+        "201":
+          description: Created. A new resource has been created.
+        "204":
+          description: A new resource has been deleted.
+        "400":
+          description: The provided information is invalid, the request failed.
+        "404":
+          description: '  The resource has not been found.'
+        "500":
+          description: Something went wrong on our side.
+        "502":
+          description: Something went wrong on our side.
+        "503":
+          description: Something went wrong on our side.
+        "504":
+          description: Something went wrong on our side.
+      security:
+      - API_Key: []
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The user ID.
+        username:
+          type: string
+          description: The user name.
+  responses:
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        WWW_Authenticate:
+          style: simple
+          explode: false
+          schema:
+            type: string
+  headers:
+    schema:
+      $ref: '#/components/schemas/User'
+  securitySchemes:
+    API_Key:
+      type: http
+      scheme: basic
