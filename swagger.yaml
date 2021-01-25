@@ -92,7 +92,7 @@ paths:
       produces:
       - application/json
 swagger: '2.0'
-host: "localhost:10010"
+host: "https://app.snipcart.com/api"
 schemes:
 - https
 basePath: "/api"
